@@ -21,7 +21,7 @@ class Game:
     def empty_squares(self):
         return " " in self.board
 
-    def winner(self, square, letter):
+    def winner(self, letter, square):
 
         #checking if there is a three-in-a-row in the row
         row_index = square // 3
@@ -53,18 +53,45 @@ class Game:
             return True
 
 
+    def make_move(self, letter, square):
+        self.board[square] = letter
 
         
 
 def TicTacToe():
     x_player = HumanPlayer("X")
     o_player = RandomComputerPlayer("O")
-
+    game = Game()
     next_move = "X"
-    
+    Game.print_board_numbers()
+
     #Not sure if this code will work because I haven't created a object of the Game class.
-    while Game.winner():
-        Game.print_board_numbers()
+    while not game.empty_squares():
+        game.print_board()
+
+        if next_move == "X":
+            square = x_player.get_move(Game)
+            game.make_move("X", square)
+            
+            if game.winner("X", square):
+                return True
+            else:
+                next_move = "O"
+
+        if next_move == "O":
+            square = x_player.get_move(Game)
+            game.make_move("O", square)
+            
+            if game.winner("O", square):
+                return True
+            else:
+                next_move = "X"
+        
+
+
+if __name__ == "__main__":
+    TicTacToe()
+
 
 
     

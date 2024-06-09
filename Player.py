@@ -21,6 +21,9 @@ class HumanPlayer(Player):
                 val = int(input("Enter a number between (0,8)"))
             else:
                 value = True
+        
+        
+        return val
 
         
 
