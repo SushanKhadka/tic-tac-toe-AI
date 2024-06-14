@@ -18,7 +18,7 @@ class HumanPlayer(Player):
         while value:
             if(val not in game.available_moves()):
                 print("Invalid input, please try again")
-                val = int(input("Enter a number between (0,8)"))
+                val = int(input("Enter a number between (0,8) ---- "))
             else:
                 value = True
         

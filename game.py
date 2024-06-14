@@ -22,39 +22,34 @@ class Game:
         return " " in self.board
 
     def winner(self, letter, square):
-
-        #checking if there is a three-in-a-row in the row
+        # Check if there is a three-in-a-row in the row
         row_index = square // 3
-        #This code is to check if all the elements in a row are same or not.
-        #And for that, built in function, all() has been used.
-        #If all three elements of the row are same, a winner message will be printed
-        #and the method will return True
-        if all([self.board[row_index * 3 : (row_index + 1) *3]]):
+        if all(self.board[row_index * 3 + i] == letter for i in range(3)):
             print(f"{letter} player wins!")
             return True
 
-        #Checking if there is a three-in-a-row in the column
+        # Check if there is a three-in-a-row in the column
         col_index = square % 3
-        #Not really sure if this code will work. Will get back to this
-        if all([self.board[i] for i in self.board.count if i % 3 == col_index]):
+        if all(self.board[col_index + 3 * i] == letter for i in range(3)):
             print(f"{letter} player wins!")
             return True
-        
-        #Checking if there is a three-in-a-row in any diagonal line
-        
-        #This will check if there is any three-in-a-row in any of the two diagonals
-        #The two diagonals are [0,4,8] and [2,4,6]
-        if all([self.board[i] for i in [0,4,8]]):
+
+        # Check if there is a three-in-a-row in the main diagonal
+        if all(self.board[i] == letter for i in [0, 4, 8]):
             print(f"{letter} player wins!")
             return True
-        
-        if all([self.board[i] for i in [2,4,6]]):
+
+        # Check if there is a three-in-a-row in the anti-diagonal
+        if all(self.board[i] == letter for i in [2, 4, 6]):
             print(f"{letter} player wins!")
             return True
+
+        return False
 
 
     def make_move(self, letter, square):
         self.board[square] = letter
+        self.print_board()
 
         
 
@@ -64,30 +59,33 @@ def TicTacToe():
     game = Game()
     next_move = "X"
     Game.print_board_numbers()
+    print("------------")
 
-    #Not sure if this code will work because I haven't created a object of the Game class.
-    while not game.empty_squares():
-        game.print_board()
+    while game.empty_squares():
 
         if next_move == "X":
-            square = x_player.get_move(Game)
+            print("It's X's turn.")
+            square = x_player.get_move(game)
             game.make_move("X", square)
             
             if game.winner("X", square):
-                return True
+                break
             else:
                 next_move = "O"
 
         if next_move == "O":
-            square = x_player.get_move(Game)
+            print("It's O's turn.")
+            square = x_player.get_move(game)
             game.make_move("O", square)
             
             if game.winner("O", square):
-                return True
+                break
             else:
                 next_move = "X"
         
 
+    if not game.empty_squares():
+        print("It's a tie!")
 
 if __name__ == "__main__":
     TicTacToe()
@@ -95,5 +93,3 @@ if __name__ == "__main__":
 
 
     
-
-
